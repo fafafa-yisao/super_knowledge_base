@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/back-end/algorithm/algorithm.iml" filepath="$PROJECT_DIR$/back-end/algorithm/algorithm.iml" />
       <module fileurl="file://$PROJECT_DIR$/back-end/demo-JPA/demo-JPA.iml" filepath="$PROJECT_DIR$/back-end/demo-JPA/demo-JPA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/demo-redis/demo-redis.iml" filepath="$PROJECT_DIR$/back-end/demo-redis/demo-redis.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/super_knowledge_base.iml" filepath="$PROJECT_DIR$/.idea/super_knowledge_base.iml" />
     </modules>
   </component>
