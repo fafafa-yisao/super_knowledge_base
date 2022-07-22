@@ -1,3 +1,4 @@
+import redis.clients.jedis.Connection;
 import redis.clients.jedis.JedisPubSub;
 
 /**
@@ -27,5 +28,10 @@ public class RedisKeyExpiredListener extends JedisPubSub {
     @Override
     public void onMessage(String channel, String message) {
         System.out.println("redis event key :" + message);
+    }
+
+    @Override
+    public void onPMessage(String pattern, String channel, String message) {
+        System.out.println(message);
     }
 }

@@ -14,31 +14,42 @@ import java.util.Set;
  */
 public class RedisKyeDel {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+
+        JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
 
         RedisKeyExpiredListener redisKeyExpiredListener = new RedisKeyExpiredListener();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
-                System.out.println("启动了Redis过期监听");
-                System.out.println(redisKeyExpiredListener.toString());
-                Jedis jedis = jedisPool.getResource();
+        Thread thread = new Thread(() -> {
+            Jedis jedis = jedisPool.getResource();
+            String s = jedis.configSet("notify-keyspace-events","KEA");
+            System.out.println(s);
+            String setex = jedis.setex("myKey", 10, "v1");
+            System.out.println(setex);
+            // 阻塞式订阅
+            //
+            jedis.psubscribe(redisKeyExpiredListener,"__keyevent@*__:expired","ks.*");
+        });
+        thread.start();
 
-                String parameter = "notify-keyspace-events";
-//                jedis.configSet(parameter, "Ex");
-                List<String> notify = jedis.configGet(parameter);
-                System.out.println(notify);
-
-                Set<String> keys = jedis.keys("*");
-                keys.stream().forEach(System.out::println);
-                jedis.set("123", "456");
-                jedis.pexpire("123", 10000);
-                // 订阅redis key过期时间，需要reids 服务器配置notify-keyspace-events Ex
-                jedis.subscribe(redisKeyExpiredListener, "__keyevent@*__:expired");
-                System.out.println("-----");
-            }
-        }).start();
+//        new Thread(() -> {
+//            System.out.println("启动了Redis过期监听");
+//            System.out.println(redisKeyExpiredListener.toString());
+//            Jedis jedis = jedisPool.getResource();
+//
+//            String parameter = "notify-keyspace-events";
+////                jedis.configSet(parameter, "Ex");
+//            List<String> notify = jedis.configGet(parameter);
+//            System.out.println(notify);
+//
+//            Set<String> keys = jedis.keys("*");
+//            keys.stream().forEach(System.out::println);
+//            jedis.set("123", "456");
+//            jedis.pexpire("123", 10000);
+//            // 订阅redis key过期时间，需要reids 服务器配置notify-keyspace-events Ex
+//            jedis.subscribe(redisKeyExpiredListener, "__keyevent@*__:expired");
+//            System.out.println("-----");
+//        }).start();
     }
 }
