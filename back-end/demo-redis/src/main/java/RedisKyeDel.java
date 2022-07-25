@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * TODO
+ * 监控Redis key删除示例
  *
  * @author yi_sao
  * @date 2022/7/22
@@ -25,31 +25,12 @@ public class RedisKyeDel {
             Jedis jedis = jedisPool.getResource();
             String s = jedis.configSet("notify-keyspace-events","KEA");
             System.out.println(s);
-            String setex = jedis.setex("myKey", 10, "v1");
+            String setex = jedis.setex("myKey", 5, "v1");
             System.out.println(setex);
             // 阻塞式订阅
-            //
-            jedis.psubscribe(redisKeyExpiredListener,"__keyevent@*__:expired","ks.*");
+            //使用subscribe订阅似乎不会成功
+            jedis.subscribe(redisKeyExpiredListener,"__keyevent@*__:expired");
         });
         thread.start();
-
-//        new Thread(() -> {
-//            System.out.println("启动了Redis过期监听");
-//            System.out.println(redisKeyExpiredListener.toString());
-//            Jedis jedis = jedisPool.getResource();
-//
-//            String parameter = "notify-keyspace-events";
-////                jedis.configSet(parameter, "Ex");
-//            List<String> notify = jedis.configGet(parameter);
-//            System.out.println(notify);
-//
-//            Set<String> keys = jedis.keys("*");
-//            keys.stream().forEach(System.out::println);
-//            jedis.set("123", "456");
-//            jedis.pexpire("123", 10000);
-//            // 订阅redis key过期时间，需要reids 服务器配置notify-keyspace-events Ex
-//            jedis.subscribe(redisKeyExpiredListener, "__keyevent@*__:expired");
-//            System.out.println("-----");
-//        }).start();
     }
 }
