@@ -29,7 +29,7 @@ public class RedisKyeDel {
             System.out.println(setex);
             // 阻塞式订阅
             //使用subscribe订阅似乎不会成功
-            jedis.subscribe(redisKeyExpiredListener,"__keyevent@*__:expired");
+            jedis.psubscribe(redisKeyExpiredListener,"__keyevent@*__:expired");
         });
         thread.start();
     }
