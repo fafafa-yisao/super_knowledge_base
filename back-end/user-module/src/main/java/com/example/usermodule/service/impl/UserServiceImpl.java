@@ -12,7 +12,6 @@ import com.example.usermodule.mapper.UserMapper;
 import com.example.usermodule.pojo.User;
 import com.example.usermodule.service.UserService;
 import com.example.usermodule.util.TokenUtil;
-import com.example.usermodule.vo.UserVo;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,5 +1,7 @@
-package com.example.usermodule.vo;
+package com.example.usermodule.global.api;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,14 +15,19 @@ import java.io.Serializable;
  * @author yi_sao
  * @date 2022/8/15
  */
+@ApiModel(value = "统一响应")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Result<T> implements Serializable {
-
+    @ApiModelProperty(value = "响应码",example = "200")
     private Integer code;
+
+    @ApiModelProperty(value = "提示信息",example = "成功")
     private String msg;
+
+    @ApiModelProperty(value = "响应数据")
     private T data;
 
     public static <T> Result<T> success(T data){

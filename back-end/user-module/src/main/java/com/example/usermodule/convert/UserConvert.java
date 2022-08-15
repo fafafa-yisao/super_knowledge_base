@@ -1,7 +1,7 @@
 package com.example.usermodule.convert;
 
 import com.example.usermodule.pojo.User;
-import com.example.usermodule.vo.UserVo;
+import com.example.usermodule.controller.user.vo.UserVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
