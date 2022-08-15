@@ -10,6 +10,7 @@ import com.example.usermodule.constant.UserStateEnum;
 import com.example.usermodule.mapper.UserMapper;
 import com.example.usermodule.pojo.User;
 import com.example.usermodule.service.UserService;
+import com.example.usermodule.util.TokenUtil;
 import com.example.usermodule.vo.UserVo;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         Boolean aBoolean = verifyPassword(one, userVo.getPassword());
         if(aBoolean){
-            return "登录成功";
+            one.setPassword("******");
+            return TokenUtil.creatToken(one);
         } else {
-            return "密码错误";
+            return null;
         }
     }
 

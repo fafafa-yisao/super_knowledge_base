@@ -1,5 +1,6 @@
 package com.example.usermodule.vo;
 
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class UserVo implements Serializable {
      * 用户邮箱
      */
     private String userEmail;
+
     /**
      * 密码
      */
