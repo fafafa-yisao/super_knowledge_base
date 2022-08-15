@@ -14,15 +14,13 @@ public interface UserService extends IService<User> {
 
     /**
      * 登录
-     * @param userVo
-     * @return
+     * @param user 用户信息
      */
-    String login(UserVo userVo);
+    String login(User user);
 
     /**
      * 注册
-     * @param userVo
-     * @return
+     * @param user 用户信息
      */
-    Boolean register(UserVo userVo);
+    Boolean register(User user);
 }

@@ -17,17 +17,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Result implements Serializable {
+public class Result<T> implements Serializable {
 
     private Integer code;
     private String msg;
-    private Object data;
+    private T data;
 
-    public static Result success(Object data){
-        return new Result(200, "成功", data);
+    public static <T> Result<T> success(T data){
+        return new Result<>(200, "成功", data);
     }
 
-    public static Result error(String msg){
-        return new Result(400, msg, null);
+    public static  Result<String> error(String msg){
+        return new Result<>(400, msg, null);
     }
 }

@@ -7,6 +7,7 @@ import cn.hutool.crypto.digest.HMac;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.usermodule.constant.UserStateEnum;
+import com.example.usermodule.exception.DefaultException;
 import com.example.usermodule.mapper.UserMapper;
 import com.example.usermodule.pojo.User;
 import com.example.usermodule.service.UserService;
@@ -25,17 +26,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 登录
-     * @param userVo
-     * @return
+     * @param user 用户信息
      */
     @Override
-    public String login(UserVo userVo) {
-        User user = User.builder().userEmail(userVo.getUserEmail()).build();
+    public String login(User user) {
         User one = getOne(Wrappers.query(user));
-        if(one == null){
-            return null;
-        }
-        Boolean aBoolean = verifyPassword(one, userVo.getPassword());
+        if(one == null)
+            throw  DefaultException.exception("用户名或者密码错误");
+
+        Boolean aBoolean = verifyPassword(one, user.getPassword());
+
         if(aBoolean){
             one.setPassword("******");
             return TokenUtil.creatToken(one);
@@ -46,18 +46,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 注册
-     * @param userVo
-     * @return
+     * @param user 用户信息
      */
     @Override
-    public Boolean register(UserVo userVo) {
-        User user = User.builder().userEmail(userVo.getUserEmail()).build();
+    public Boolean register(User user) {
         long count = count(Wrappers.query(user));
-        if(count > 0){
-            return false;
-        }
-        User build = User.builder().userEmail(userVo.getUserEmail())
-                .password(encryptPassword(userVo.getPassword()))
+        if(count > 0)
+            throw DefaultException.exception("账户已被注册");
+
+        User build = User.builder().userEmail(user.getUserEmail())
+                .password(encryptPassword(user.getPassword()))
                 .state(UserStateEnum.UNCONFIRMED)
                 .build();
         return save(build);
@@ -65,7 +63,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 加密密码
-     * @return
      */
     private String encryptPassword(String password){
         UUID uuid = UUID.randomUUID(true);
@@ -77,9 +74,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 验证密码
-     * @param user
-     * @param password
-     * @return
+     * @param user 用户信息
+     * @param password 密码
      */
     private Boolean verifyPassword(User user, String password){
         String userPassword = user.getPassword();

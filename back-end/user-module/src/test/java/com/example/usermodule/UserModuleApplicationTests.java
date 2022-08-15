@@ -52,7 +52,7 @@ class UserModuleApplicationTests {
 
     @Test
     void testLoginAndRegister(){
-        UserVo vo = new UserVo();
+        User vo = new User();
         vo.setUserEmail("234");
         vo.setPassword("789");
         Boolean register = userService.register(vo);
