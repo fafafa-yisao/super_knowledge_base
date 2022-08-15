@@ -29,17 +29,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public String login(User user) {
+        String password = user.getPassword();
+        user.setPassword(null);
         User one = getOne(Wrappers.query(user));
-        if(one == null)
-            throw  DefaultException.exception("用户名或者密码错误");
+        if(one == null){
+            throw  DefaultException.exception("用户名不存在");
+        }
 
-        Boolean aBoolean = verifyPassword(one, user.getPassword());
+
+        Boolean aBoolean = verifyPassword(one, password);
 
         if(aBoolean){
             one.setPassword("******");
             return TokenUtil.creatToken(one);
         } else {
-            return null;
+            throw  DefaultException.exception("密码错误");
         }
     }
 
