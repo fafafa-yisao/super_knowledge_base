@@ -3,32 +3,22 @@ package com.example.usermodule;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ValidateException;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.ReUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.HMac;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
-import cn.hutool.jwt.signers.JWTSigner;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.usermodule.constant.UserStateEnum;
 import com.example.usermodule.mapper.UserMapper;
 import com.example.usermodule.pojo.User;
 import com.example.usermodule.service.UserService;
-import com.example.usermodule.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.crypto.SecretKey;
-import javax.xml.bind.ValidationException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
 
 @SpringBootTest
 @Slf4j

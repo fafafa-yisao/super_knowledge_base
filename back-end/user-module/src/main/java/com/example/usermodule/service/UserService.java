@@ -2,7 +2,6 @@ package com.example.usermodule.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.usermodule.pojo.User;
-import com.example.usermodule.vo.UserVo;
 
 /**
  * 用户服务

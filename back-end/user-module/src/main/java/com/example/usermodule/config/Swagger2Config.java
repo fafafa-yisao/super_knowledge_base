@@ -17,6 +17,10 @@ import java.util.Collections;
 @EnableSwagger2
 public class Swagger2Config {
 
+    /**
+     * 暂时使用的是 默认的 ApiInfo,有需要可以自行拓转
+     * @return
+     */
     @Bean
     public Docket createRestApi() {
         // 创建 Docket 对象
