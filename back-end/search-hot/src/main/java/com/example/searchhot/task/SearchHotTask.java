@@ -115,7 +115,7 @@ public class SearchHotTask {
                     if(hot.getMaxHotValue() < hotDetail.getHotValue()){
                         hot.setMaxHotValue(hotDetail.getHotValue());
                     }
-                    if(hot.getMaxRanking() < hotDetail.getRanking()){
+                    if(hot.getMaxRanking() > hotDetail.getRanking()){
                         hot.setMaxRanking(hotDetail.getRanking());
                     }
                     hotMapper.updateById(hot);
